@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dark Mode for LinkedIn</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="panel">
+      <h1 class="title">Dark Mode for LinkedIn</h1>
+
+      <fieldset class="modes">
+        <legend class="sr-only">Theme mode</legend>
+
+        <label class="mode">
+          <input type="radio" name="mode" value="on" />
+          <span class="mode__text">
+            <span class="mode__label">On</span>
+            <span class="mode__hint">Always use the dark theme</span>
+          </span>
+          <svg class="mode__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </label>
+
+        <label class="mode">
+          <input type="radio" name="mode" value="auto" />
+          <span class="mode__text">
+            <span class="mode__label">Match system</span>
+            <span class="mode__hint">Follow your OS light/dark setting</span>
+          </span>
+          <svg class="mode__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </label>
+
+        <label class="mode">
+          <input type="radio" name="mode" value="off" />
+          <span class="mode__text">
+            <span class="mode__label">Off</span>
+            <span class="mode__hint">Leave LinkedIn as it is</span>
+          </span>
+          <svg class="mode__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </label>
+      </fieldset>
+
+      <p class="status" id="status" role="status">
+        <span class="status__dot" id="status-dot" data-state="idle" aria-hidden="true"></span>
+        <span id="status-text">Checking the current tab…</span>
+      </p>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

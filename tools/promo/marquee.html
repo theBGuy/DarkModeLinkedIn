@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Marquee promo tile</title>
+    <style>
+      /* Rendered at exactly 1400x560 by tools/generate-store-assets.mjs.
+       * The composition is the product itself: one identical interface drawn
+       * twice, meeting at a hard seam, light on the left and dark on the right.
+       * Shapes are deliberately generic — this advertises the extension, and
+       * must not borrow LinkedIn's marks. */
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --light-canvas: #f4f2ee;
+        --light-card: #ffffff;
+        --light-ink: rgba(0, 0, 0, 0.9);
+        --light-ink-soft: rgba(0, 0, 0, 0.45);
+        --light-accent: #0a66c2;
+
+        --dark-canvas: #000000;
+        --dark-card: #1b1f23;
+        --dark-ink: rgba(245, 245, 245, 0.92);
+        --dark-ink-soft: rgba(245, 245, 245, 0.5);
+        --dark-accent: #70b5f9;
+      }
+
+      html, body { width: 1400px; height: 560px; overflow: hidden; }
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: var(--dark-canvas);
+        position: relative;
+      }
+
+      /* The two themes as full-height bands; the mock UI spans both so the
+       * seam cuts through identical geometry. */
+      .band { position: absolute; top: 0; bottom: 0; }
+      .band--light { left: 0; width: 470px; background: var(--light-canvas); }
+      .band--dark { left: 470px; right: 0; background: var(--dark-canvas); }
+      .seam {
+        position: absolute;
+        left: 470px; top: 0; bottom: 0;
+        width: 2px;
+        background: var(--dark-accent);
+      }
+
+      /* One mock interface laid across the seam. Each element is duplicated:
+       * the light copy is clipped to the left band, the dark copy to the right. */
+      .stage { position: absolute; inset: 0; }
+      .layer { position: absolute; inset: 0; }
+      .layer--light { clip-path: inset(0 930px 0 0); }
+      .layer--dark  { clip-path: inset(0 0 0 470px); }
+
+      /* The card stops well short of the copy so the two never overlap; a scrim
+       * over the dark half would crush exactly the comparison this is here to
+       * make. Both cards carry a hairline border because #fff on #f4f2ee and
+       * #1b1f23 on #000 are each only a few steps apart. */
+      .card {
+        position: absolute;
+        left: 96px;
+        width: 724px;
+        border-radius: 14px;
+      }
+      .card--main { top: 96px; height: 224px; }
+      .card--sub  { top: 352px; height: 112px; }
+
+      .layer--light .card {
+        background: var(--light-card);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.09);
+      }
+      .layer--dark .card {
+        background: var(--dark-card);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+      }
+
+      .avatar {
+        position: absolute; left: 36px; top: 36px;
+        width: 76px; height: 76px; border-radius: 50%;
+      }
+      .layer--light .avatar { background: var(--light-accent); }
+      .layer--dark  .avatar { background: var(--dark-accent); }
+
+      .bar { position: absolute; border-radius: 5px; }
+      .layer--light .bar { background: var(--light-ink); }
+      .layer--dark  .bar { background: var(--dark-ink); }
+      .layer--light .bar--soft { background: var(--light-ink-soft); }
+      .layer--dark  .bar--soft { background: var(--dark-ink-soft); }
+
+      /* Every bar either clears the seam by a wide margin or stops short of it.
+       * A bar ending just past the seam leaves a stub of inverted colour that
+       * reads as a rendering artifact rather than as the same element restyled.
+       * Seam is at x=470; the card starts at x=96, so subtract 96 here. */
+      .bar--title { left: 136px; top: 46px; width: 380px; height: 17px; }
+      .bar--sub   { left: 136px; top: 76px; width: 480px; height: 12px; }
+      .bar--l1 { left: 36px; top: 142px; width: 652px; height: 12px; }
+      .bar--l2 { left: 36px; top: 170px; width: 560px; height: 12px; }
+      .bar--l3 { left: 36px; top: 198px; width: 300px; height: 12px; }
+
+      .pill {
+        position: absolute; top: 36px; height: 40px; border-radius: 20px;
+      }
+      .pill--a { left: 36px; width: 176px; }
+      .pill--b { left: 232px; width: 168px; }
+      .pill--c { left: 420px; width: 148px; }
+      .layer--light .pill--a { background: var(--light-accent); }
+      .layer--dark  .pill--a { background: var(--dark-accent); }
+      .layer--light .pill--b,
+      .layer--light .pill--c { border: 2px solid var(--light-ink-soft); }
+      .layer--dark .pill--b,
+      .layer--dark .pill--c { border: 2px solid var(--dark-ink-soft); }
+
+      .copy {
+        position: absolute;
+        left: 892px; top: 0; bottom: 0; right: 80px;
+        display: flex; flex-direction: column; justify-content: center;
+        gap: 20px;
+      }
+
+      .mark { width: 76px; height: 76px; display: block; }
+
+      h1 {
+        font-size: 60px;
+        line-height: 1.04;
+        letter-spacing: -0.028em;
+        font-weight: 700;
+        color: var(--dark-ink);
+        text-wrap: balance;
+      }
+
+      p {
+        font-size: 25px;
+        line-height: 1.42;
+        color: var(--dark-ink-soft);
+        max-width: 21ch;
+      }
+
+      .rule { width: 64px; height: 4px; border-radius: 2px; background: var(--dark-accent); }
+    </style>
+  </head>
+  <body>
+    <div class="band band--light"></div>
+    <div class="band band--dark"></div>
+
+    <div class="stage">
+      <div class="layer layer--light">
+        <div class="card card--main">
+          <div class="avatar"></div>
+          <div class="bar bar--title"></div>
+          <div class="bar bar--sub bar--soft"></div>
+          <div class="bar bar--l1 bar--soft"></div>
+          <div class="bar bar--l2 bar--soft"></div>
+          <div class="bar bar--l3 bar--soft"></div>
+        </div>
+        <div class="card card--sub">
+          <div class="pill pill--a"></div>
+          <div class="pill pill--b"></div>
+          <div class="pill pill--c"></div>
+        </div>
+      </div>
+
+      <div class="layer layer--dark">
+        <div class="card card--main">
+          <div class="avatar"></div>
+          <div class="bar bar--title"></div>
+          <div class="bar bar--sub bar--soft"></div>
+          <div class="bar bar--l1 bar--soft"></div>
+          <div class="bar bar--l2 bar--soft"></div>
+          <div class="bar bar--l3 bar--soft"></div>
+        </div>
+        <div class="card card--sub">
+          <div class="pill pill--a"></div>
+          <div class="pill pill--b"></div>
+          <div class="pill pill--c"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seam"></div>
+
+    <div class="copy">
+      <svg class="mark" viewBox="0 0 128 128" aria-hidden="true">
+        <rect width="128" height="128" rx="28" fill="#1b1f23" />
+        <mask id="crescent">
+          <rect width="128" height="128" fill="black" />
+          <circle cx="59" cy="64" r="38" fill="white" />
+          <circle cx="81" cy="46" r="35" fill="black" />
+        </mask>
+        <rect width="128" height="128" fill="#70b5f9" mask="url(#crescent)" />
+      </svg>
+      <h1>Dark Mode<br />for LinkedIn</h1>
+      <div class="rule"></div>
+      <p>Read LinkedIn at night without the glare.</p>
+    </div>
+  </body>
+</html>

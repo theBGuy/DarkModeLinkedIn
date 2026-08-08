@@ -1,0 +1,179 @@
+/* The popup deliberately reuses the theme's own palette: it opens over a page
+ * this extension just darkened, so a light panel would flash exactly the glare
+ * the user installed it to avoid. */
+:root {
+  --surface: #1b1f23;
+  --surface-raised: #262b31;
+  --surface-hover: #21262b;
+  --border: rgba(255, 255, 255, 0.13);
+  --ink: rgba(255, 255, 255, 0.92);
+  --ink-muted: rgba(255, 255, 255, 0.6);
+  --accent: #70b5f9;
+  --positive: #7fc15e;
+  --caution: #e7a33e;
+
+  --radius: 8px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 160ms;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--surface);
+}
+
+body {
+  width: 300px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.panel {
+  padding: 14px;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.006em;
+}
+
+.modes {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.mode:hover {
+  background: var(--surface-hover);
+}
+
+/* Native radio drives state and keyboard behaviour (arrow keys move within the
+ * group); it is hidden visually but stays focusable so the ring below works.
+ * Styling the row from the input's state needs :has(), hence the manifest's
+ * minimum_chrome_version of 105. */
+.mode input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mode:has(input:checked) {
+  background: var(--surface-raised);
+  border-color: var(--border);
+}
+
+.mode:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.mode__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.mode__label {
+  font-weight: 500;
+}
+
+.mode:has(input:checked) .mode__label {
+  font-weight: 650;
+}
+
+.mode__hint {
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+
+/* Selection is carried by three cues at once — raised surface, heavier label,
+ * and this check — so it never rests on color alone. */
+.mode__check {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--accent);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.mode:has(input:checked) .mode__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.status {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+
+.status__dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  transition: background-color var(--dur) var(--ease);
+}
+
+.status__dot[data-state="active"] {
+  background: var(--positive);
+}
+
+.status__dot[data-state="attention"] {
+  background: var(--caution);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 1ms !important;
+  }
+  .mode__check {
+    transform: none;
+  }
+}

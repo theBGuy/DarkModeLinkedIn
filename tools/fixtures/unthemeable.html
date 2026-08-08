@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Unthemeable stand-in</title>
+    <!-- Reproduces the notifications-page failure: no native theme switch, and
+         cards that hardcode white instead of using a token. Recolouring only
+         inverts the text and leaves it invisible, so the legibility check must
+         revoke it and leave the page alone. -->
+    <style>
+      body { font: 16px system-ui; margin: 0; padding: 24px;
+             background: var(--color-background-canvas, #f4f2ee);
+             color: var(--color-text, rgba(0,0,0,0.9)); }
+      .card { background: #ffffff; padding: 16px; border-radius: 8px; margin-bottom: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="card"><p>Evan Goldberg</p><p>Senior Software Engineer</p><p>Chesapeake, Virginia</p></div>
+    <div class="card"><p>Manage your notifications</p><p>View settings</p><p>Some more copy</p></div>
+    <div class="card"><p>Mobile Engineer: new opportunities</p><p>View jobs</p><p>Another line here</p></div>
+    <div class="card"><p>Lead Software Engineer</p><p>Frontend Developer</p><p>Back End Developer</p></div>
+  </body>
+</html>

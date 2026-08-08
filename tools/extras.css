@@ -1,0 +1,88 @@
+/* extras.css — handwritten layer appended after the generated token overrides.
+ * Covers surfaces that hardcode colors instead of using LinkedIn's design
+ * tokens, found by sweeping LinkedIn's stylesheet for literal light/dark color
+ * declarations and by inspecting the live page. */
+
+html[data-dmli="dark"] {
+  color-scheme: dark;
+  background-color: var(--color-background-canvas, #000) !important;
+}
+
+/* The guest hero art is z-index:-1, painting BETWEEN the html and body
+ * backgrounds — body must stay transparent or the art is hidden. The canvas
+ * color therefore lives on html, above. */
+html[data-dmli="dark"] body {
+  background-color: transparent !important;
+  color: var(--color-text, rgba(255, 255, 255, 0.9));
+}
+
+/* ---- hardcoded light backgrounds ---- */
+html[data-dmli="dark"] .bg-white,
+html[data-dmli="dark"] .bg-warm-gray-10,
+html[data-dmli="dark"] .bg-\[\#f1ece5\],
+html[data-dmli="dark"] .bg-\[\#f8f1e4\],
+html[data-dmli="dark"] .\!bg-\[\#F1F8FA\],
+html[data-dmli="dark"] .cta-modal,
+html[data-dmli="dark"] .google-one-tap-module__outline,
+html[data-dmli="dark"] .after\:\!bg-blue-10::after,
+html[data-dmli="dark"] .after\:bg-\[\#f1ece5\]::after,
+html[data-dmli="dark"] .after\:bg-\[\#f4faff\]::after {
+  background-color: var(--color-background-container, #1b1f23) !important;
+}
+
+/* Guest search + generic inputs hardcode #fff. */
+html[data-dmli="dark"] .search .dismissable-input,
+html[data-dmli="dark"] .search .search-input,
+html[data-dmli="dark"] .search.lazy-loaded .keywords-typeahead-input,
+html[data-dmli="dark"] .search.lazy-loaded .location-typeahead-input,
+html[data-dmli="dark"] .search.lazy-loaded .search__placeholder--search,
+html[data-dmli="dark"] .search.lazy-loaded .search__placeholder--location,
+html[data-dmli="dark"] .isExpanded.search,
+html[data-dmli="dark"] input.input,
+html[data-dmli="dark"] textarea.input {
+  background-color: var(--color-background-container, #1b1f23) !important;
+  color: var(--color-text, rgba(255, 255, 255, 0.9)) !important;
+}
+
+/* ---- hardcoded dark text on now-dark surfaces ----
+ * Deliberately EXCLUDES .artdeco-button--inverse, .btn-dark-bkg:hover, and the
+ * Google/Microsoft auth buttons: those keep white backgrounds by design, so
+ * their dark text is already correct. */
+html[data-dmli="dark"] .text-black-a60,
+html[data-dmli="dark"] .input__label,
+html[data-dmli="dark"] .join-form__form-body-agreement,
+html[data-dmli="dark"] .sign-in-form__or-span,
+html[data-dmli="dark"] .etta-slide-list .slide-list__heading {
+  color: var(--color-text-low-emphasis, rgba(255, 255, 255, 0.6)) !important;
+}
+
+html[data-dmli="dark"] .text-black-a90,
+html[data-dmli="dark"] .input__input,
+html[data-dmli="dark"] .sign-in-form__forgot-password-link,
+html[data-dmli="dark"] .profile-card .profile-card__info-name,
+html[data-dmli="dark"] .profile-card .profile-card__info-email {
+  color: var(--color-text, rgba(255, 255, 255, 0.9)) !important;
+}
+
+/* Sections whose ::after paints a full-color illustration we cannot recolor;
+ * keep light-mode text colors so copy stays legible over the artwork. */
+html[data-dmli="dark"] [class*="after-lazy-bg-"] h1,
+html[data-dmli="dark"] [class*="after-lazy-bg-"] h2,
+html[data-dmli="dark"] [class*="after-lazy-bg-"] h3,
+html[data-dmli="dark"] [class*="after-lazy-bg-"] p {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+html[data-dmli="dark"] ::selection {
+  background-color: rgba(112, 181, 249, 0.35);
+  color: var(--color-text, rgba(255, 255, 255, 0.9));
+}
+
+/* Scrollbars follow color-scheme in Chrome, but pin the thumb so it stays
+ * visible against the near-black canvas. */
+html[data-dmli="dark"] ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+html[data-dmli="dark"] ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.36);
+}
