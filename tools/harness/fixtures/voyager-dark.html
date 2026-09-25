@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" class="theme theme--dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Voyager stand-in</title>
+    <!-- Mirrors LinkedIn's Voyager theming, taken from their own bundle: a
+         light sheet plus a DISABLED dark sheet keyed by id, and a theme--*
+         class on <html>. The disabled sheet is the point — the class alone
+         does nothing, which is what makes this front-end easy to get wrong. -->
+    <style id="ui-theme">
+      html { --canvas: #f4f2ee; --card: #fff; --ink: rgba(0,0,0,0.9); }
+    </style>
+    <style id="ui-theme-dark">
+      html { --canvas: #000; --card: #1b1f23; --ink: rgba(245,245,245,0.9); }
+    </style>
+    <style>
+      body { background: var(--canvas); color: var(--ink); font: 16px system-ui; margin: 0; padding: 24px; }
+      .card { background: var(--card); color: var(--ink); padding: 16px; border-radius: 8px; margin-bottom: 12px; }
+    </style>
+  </head>
+  <body class="render-mode-BIGPIPE nav-v2 ember-application">
+    <div class="card"><p>Notification one</p></div>
+    <div class="card"><p>Notification two</p></div>
+    <div class="card"><p>Notification three</p></div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+import { readFileSync } from "node:fs";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { launch } from "./cdp.mjs";
+import { decodePng } from "./png.mjs";
+const here = dirname(fileURLToPath(import.meta.url)).split(String.fromCharCode(92)).join("/");
+const MENU = readFileSync(`${here}/fixtures/me-menu.html`, "utf8");
+const browser = await launch({ extPath: `${here}/ext-${process.argv[2] ?? "after"}`.split("/").join(String.fromCharCode(92)), port: 9500 + Math.floor(Math.random() * 20), profileRoot: here });
+const pg = await browser.newPage();
+await pg.send("Page.bringToFront");
+await pg.goto("https://www.linkedin.com/help/linkedin/topic/a51", 3000);
+const r = await pg.eval(`((html) => { const w = document.createElement("div"); w.className = "dropdown__container me-menu"; w.innerHTML = html; document.querySelector(".global-header nav, .site-navigation").append(w); const m = w.querySelector(".me-menu__dropdown-menu"); const cb = m.querySelector(".me-menu__close"); const cbr = cb.getBoundingClientRect(); window.__close = { display: getComputedStyle(cb).display, box: [cbr.left, cbr.top, cbr.width, cbr.height].map(Math.round), border: getComputedStyle(cb).border }; Object.assign(m.style, { display: "block", position: "fixed", right: "24px", top: "120px", width: "280px", zIndex: 9999 }); const b = m.getBoundingClientRect(); const cb2 = m.querySelector(".me-menu__close"); const r2 = cb2.getBoundingClientRect(); return { close: { display: getComputedStyle(cb2).display, box: [r2.left, r2.top, r2.width, r2.height].map(Math.round), border: getComputedStyle(cb2).borderLeft, outline: getComputedStyle(cb2).outline, focus: document.activeElement === cb2 }, left: b.left, top: b.top, h: b.height, active: document.activeElement === m, radius: getComputedStyle(m).borderRadius }; })(${JSON.stringify(MENU)})`);
+console.log(JSON.stringify(r));
+// Horizontal pixel run across the left edge, 60px down from the top of the menu.
+const y = Math.round(r.top + 60), x0 = Math.round(r.left) - 6;
+const s = await pg.send("Page.captureScreenshot", { format: "png", clip: { x: x0, y, width: 14, height: 1, scale: 1 } });
+const { px, bpp, width } = decodePng(Buffer.from(s.data, "base64"));
+const row = []; for (let i = 0; i < width; i++) row.push(`${x0 + i}:${px[i * bpp]},${px[i * bpp + 1]},${px[i * bpp + 2]}`);
+console.log("edge pixels (left→right):", row.join("  "));
+
+const wrap = await pg.eval(`(() => { const w = document.querySelector(".dropdown__container.me-menu:last-of-type") || document.querySelector(".me-menu"); const all = [...document.querySelectorAll(".me-menu")]; return all.map((w) => { const c = getComputedStyle(w); const b = w.getBoundingClientRect(); return w.className + " pos=" + c.position + " box=" + [b.left, b.top, b.width, b.height].map(Math.round) + " before=" + getComputedStyle(w, "::before").content + " after=" + getComputedStyle(w, "::after").content; }); })()`); console.log("wrappers", JSON.stringify(wrap));
+const pse = await pg.eval(`(() => { const m = document.querySelector(".me-menu__dropdown-menu"); return ["::before", "::after"].map((p) => { const c = getComputedStyle(m, p); return p + " content=" + c.content + " pos=" + c.position + " inset=" + [c.top, c.left, c.right, c.bottom].join(",") + " bg=" + c.backgroundColor + " border=" + c.borderTop + " | " + c.borderLeft + " shadow=" + c.boxShadow; }); })()`); console.log(JSON.stringify(pse, null, 1));
+const who = await pg.eval(`(() => { const pts = [959, 960, 961, 962].map((x) => { const e = document.elementFromPoint(x, ${y}); return x + ":" + (e ? e.tagName.toLowerCase() + "." + String(e.className).trim().split(/\s+/).slice(0, 2).join(".") : "none"); }); const m = document.querySelector(".me-menu__dropdown-menu"); const cs = getComputedStyle(m); return { pts, borderL: cs.borderLeft, outline: cs.outline, filter: cs.filter, bgClip: cs.backgroundClip, inset: cs.boxShadow }; })()`);
+console.log(JSON.stringify(who));
+await pg.eval(`(() => { const m = document.querySelector(".me-menu__dropdown-menu"); m.style.transition = "none"; m.style.boxShadow = "none"; return true; })()`);
+await new Promise((r) => setTimeout(r, 400));
+const s2 = await pg.send("Page.captureScreenshot", { format: "png", clip: { x: x0, y, width: 14, height: 1, scale: 1 } });
+const d2 = decodePng(Buffer.from(s2.data, "base64")); const row2 = []; for (let i = 0; i < d2.width; i++) row2.push(`${x0 + i}:${d2.px[i * d2.bpp]},${d2.px[i * d2.bpp + 1]},${d2.px[i * d2.bpp + 2]}`);
+console.log("with box-shadow none:", row2.join("  "));
+await browser.close();

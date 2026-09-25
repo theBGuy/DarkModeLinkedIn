@@ -377,8 +377,9 @@ tools/generate-theme.mjs   OKLCh token inverter
 tools/tokens-light.json    snapshot of the guest pages' :root tokens
 tools/extras.css           handwritten rules for hardcoded colors
 tools/generate-icons.mjs   dependency-free PNG encoder
+tools/harness/             live Chrome test harness (see tools/harness/README.md)
 ```
 
 Everything under `tools/` is build-time only and is never packaged. The project
-has no dependencies; the theme generator, the PNG encoder, and the ZIP writer
-are all built on Node's standard library.
+has no dependencies; the theme generator, the PNG encoder, the ZIP writer, and
+the test harness are all built on Node's standard library.

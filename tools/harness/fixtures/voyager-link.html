@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" class="theme theme--light">
+  <head>
+    <meta charset="utf-8" />
+    <title>Voyager stand-in (link)</title>
+    <!-- Same as voyager.html, but the dark sheet is a real <link> whose
+         `disabled` is a reflected attribute, as on LinkedIn. -->
+    <style id="ui-theme">html { --canvas: #f4f2ee; --card: #fff; --ink: rgba(0,0,0,0.9); }</style>
+    <link id="ui-theme-dark" rel="stylesheet" href="data:text/css,html%7B--canvas:%23000;--card:%231b1f23;--ink:rgba(245,245,245,0.9)%7D" disabled />
+    <style>
+      body { background: var(--canvas); color: var(--ink); font: 16px system-ui; margin: 0; padding: 24px; }
+      .card { background: var(--card); color: var(--ink); padding: 16px; border-radius: 8px; margin-bottom: 12px; }
+    </style>
+  </head>
+  <body class="render-mode-BIGPIPE nav-v2 ember-application">
+    <div class="card"><p>Notification one</p></div>
+    <div class="card"><p>Notification two</p></div>
+  </body>
+</html>

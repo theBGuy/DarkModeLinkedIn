@@ -1,2 +1,6 @@
 dist/
 /.playwright-mcp/
+/tools/harness/ext-*/
+/tools/harness/out-*/
+/tools/harness/prof-*/
+/tools/harness/help-crawl.json

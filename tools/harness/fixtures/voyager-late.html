@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" class="theme theme--light">
+  <head>
+    <meta charset="utf-8" />
+    <title>Voyager stand-in (late sheet)</title>
+    <!-- Voyager chosen by its class alone; LinkedIn appends the disabled dark
+         <link> only after load, once every load-time apply() has run. -->
+    <style id="ui-theme">html { --canvas: #f4f2ee; --ink: rgba(0,0,0,0.9); }</style>
+    <style>body { background: var(--canvas); color: var(--ink); font: 16px system-ui; margin: 0; padding: 24px; }</style>
+  </head>
+  <body class="ember-application">
+    <p>Notification one</p><p>Notification two</p>
+    <script>
+      addEventListener("load", () => setTimeout(() => {
+        const l = document.createElement("link");
+        l.id = "ui-theme-dark"; l.rel = "stylesheet"; l.disabled = true;
+        l.href = "data:text/css,html%7B--canvas:%23000;--ink:rgba(245,245,245,0.9)%7D";
+        document.head.append(l);
+      }, 2500));
+    </script>
+  </body>
+</html>
