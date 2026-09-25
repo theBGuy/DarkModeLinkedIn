@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Dark Mode for LinkedIn",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A dark theme for LinkedIn, built from LinkedIn's own design tokens. Toggle it on or off, or follow your system theme.",
   "minimum_chrome_version": "105",
   "icons": {

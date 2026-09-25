@@ -771,3 +771,378 @@ html[data-dmli="dark"] ::-webkit-scrollbar-thumb {
 html[data-dmli="dark"] ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.36);
 }
+
+/* Footer language items highlight on hover/focus with the action blue, which the
+ * token layer lightens, while their "on-dark" ink stays white; the ink must go
+ * dark in exactly those states and nowhere else. */
+html[data-dmli="dark"] :is(.language-selector__link, .language-selector__link--selected):is(:hover, :focus),
+html[data-dmli="dark"] :is(.language-selector__link, .language-selector__link--selected):is(:hover, :focus) * {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* ---- Lithograph pages (/legal/*, /accessibility) ----
+ * LinkedIn's CMS template takes only a few colours from the guest tokens (callout
+ * copy, list text), which the token layer turns light, while its surfaces and
+ * most ink are hardcoded light-theme values, often in per-page sheets. Text is
+ * therefore reset broadly inside #lithograph-app rather than per rule; links are
+ * left out so buttons keep their own ink. Pastel surfaces become OKLCh tints of
+ * the same hue at L 0.29, which keeps body text above 10.5:1 and links above
+ * 6:1. Everything is scoped by :has() to pages that render #lithograph-app. */
+html[data-dmli="dark"] body:has(#lithograph-app) {
+  --artdeco-reset-typography-get-color-black-90: rgba(255, 255, 255, 0.9);
+  --artdeco-reset-base-get-color-black: rgba(255, 255, 255, 0.9);
+  --artdeco-reset-forms-input-color: rgba(255, 255, 255, 0.9);
+  --artdeco-reset-forms-input-placeholder-color: rgba(255, 255, 255, 0.6);
+  --artdeco-reset-link-color-blue7: #70b5f9;
+  --artdeco-reset-link-color-blue8: #a8d4ff;
+  --artdeco-reset-link-color-blue9: #cfe3f7;
+  --artdeco-reset-link-color-purple7: #cacafc;
+  --artdeco-reset-link-color-purple8: #e6e6ff;
+  --artdeco-reset-link-color-purple9: #f5f5fe;
+}
+
+html[data-dmli="dark"] body:has(#lithograph-app) #component-container,
+html[data-dmli="dark"] body:has(#lithograph-app) .banner,
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-white {
+  background-color: var(--color-background-canvas, #000);
+}
+/* A full-width light banner's image covers the whole band, headline included,
+ * and is a pale backdrop meant for dark ink; dimming it keeps the band and any
+ * photo recognisable under light ink. Side-illustration banners are left alone. */
+html[data-dmli="dark"] body:has(#lithograph-app) .banner--full-width.banner--light-background .banner__image {
+  filter: brightness(0.25);
+}
+
+html[data-dmli="dark"] body:has(#lithograph-app) .page-header,
+html[data-dmli="dark"] body:has(#lithograph-app) .header-nav,
+html[data-dmli="dark"] body:has(#lithograph-app) .custom-header__nav--mobile,
+html[data-dmli="dark"] body:has(#lithograph-app) .artdeco-dropdown__content,
+html[data-dmli="dark"] body:has(#lithograph-app) .callout.callout-color--white {
+  background-color: var(--color-background-container, #1b1f23);
+}
+html[data-dmli="dark"] body:has(#lithograph-app) .artdeco-dropdown__content--has-arrow::after {
+  border-top-color: var(--color-background-container, #1b1f23);
+  border-bottom-color: var(--color-background-container, #1b1f23);
+}
+
+html[data-dmli="dark"] body:has(#lithograph-app) #lithograph-app :is(p, li, h1, h2, h3, h4, h5, dt, dd, th, td, blockquote, figcaption),
+html[data-dmli="dark"] body:has(#lithograph-app) .t-black,
+html[data-dmli="dark"] body:has(#lithograph-app) .header-nav .artdeco-dropdown__item:is(:hover, :focus, :focus-within, :active),
+html[data-dmli="dark"] body:has(#lithograph-app) :is(a.header-nav__toplink, a.header-nav__link):is(:hover, :visited),
+html[data-dmli="dark"] body:has(#lithograph-app) .standalone-list__item::before,
+html[data-dmli="dark"] body:has(#lithograph-app) #lithograph-app #theme-list-cards a {
+  color: var(--color-text, rgba(255, 255, 255, 0.9));
+}
+/* A page-wide `a { color: #0a66c2 }` paints every link outside .rich-text.
+ * Buttons always carry a class, so classless anchors are exactly the links. */
+html[data-dmli="dark"] body:has(#lithograph-app) #lithograph-app a:not([class]),
+html[data-dmli="dark"] body:has(#lithograph-app) .expandable-section__header-button {
+  color: #70b5f9;
+}
+html[data-dmli="dark"] body:has(#lithograph-app) #lithograph-app a:not([class]):hover {
+  color: #a8d4ff;
+}
+html[data-dmli="dark"] body:has(#lithograph-app) .t-black--light,
+html[data-dmli="dark"] body:has(#lithograph-app) #lithograph-app :is(h6, .rich-text td, .banner__subheadline),
+html[data-dmli="dark"] body:has(#lithograph-app) :is(a.header-nav__toplink, a.header-nav__link, .artdeco-dropdown__item),
+html[data-dmli="dark"] body:has(#lithograph-app) .header-navigation__button > li-icon,
+html[data-dmli="dark"] body:has(#lithograph-app) .header__expand-nav-button li-icon {
+  color: var(--color-text-low-emphasis, rgba(255, 255, 255, 0.6));
+}
+html[data-dmli="dark"] body:has(#lithograph-app) .header-nav .artdeco-dropdown__item:is(:hover, :focus, :focus-within, :active) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* Photo banners are already light-on-dark by design; the dimmer reset ink above
+ * would cost them contrast over the photo, so they keep LinkedIn's white. */
+html[data-dmli="dark"] body:has(#lithograph-app) #lithograph-app :is(.banner--dark-background, .banner--light-on-dark, .banner--dark-colored-background) :is(h1, h2, h3, h4, h5, h6, p, li, .banner__subheadline) {
+  color: #fff;
+}
+
+html[data-dmli="dark"] body:has(#lithograph-app) .callout.callout-color--teal { background-color: #183033; }
+html[data-dmli="dark"] body:has(#lithograph-app) .callout.callout-color--blue { background-color: #0e303d; }
+html[data-dmli="dark"] body:has(#lithograph-app) .callout.callout-color--green { background-color: #253016; }
+html[data-dmli="dark"] body:has(#lithograph-app) .callout.callout-color--orange { background-color: #3a2717; }
+html[data-dmli="dark"] body:has(#lithograph-app) .callout:is(.callout-color--blue, .callout-color--white) li-icon {
+  color: #70b5f9;
+}
+
+html[data-dmli="dark"] body:has(#lithograph-app) #be-safe-card { background: #3d241c; }
+html[data-dmli="dark"] body:has(#lithograph-app) #be-trustworthy-card { background: #213019; }
+html[data-dmli="dark"] body:has(#lithograph-app) #be-professional-card { background: #1a2d40; }
+html[data-dmli="dark"] body:has(#lithograph-app) #theme-list-callouts li { background: #2a2b2d; }
+
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-amber-30 { background: #37280f; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-amber-40 { background: #38280f; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-cool-gray-30 { background: #1b2d3f; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-cool-gray-40 { background: #182d41; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-copper-30 { background: #3f231c; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-copper-40 { background: #3f231b; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-sage-30,
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-sage-40 { background: #213019; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-warm-gray-30 { background: #312a20; }
+html[data-dmli="dark"] body:has(#lithograph-app) .banner__image-container--background-warm-gray-40 { background: #362912; }
+
+html[data-dmli="dark"] body:has(#lithograph-app) .html-table__container table tr:nth-child(even) {
+  background-color: #272c2f;
+}
+html[data-dmli="dark"] body:has(#lithograph-app) :is(.html-table__container table, .rich-text table) {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+html[data-dmli="dark"] body:has(#lithograph-app) :is(.html-table__container table :is(th, td), .rich-text tr),
+html[data-dmli="dark"] body:has(#lithograph-app) :is(.page-header__content-container, .standalone-list__item--hairline, .article-meta__hairline),
+html[data-dmli="dark"] body:has(#lithograph-app) :is(.custom-header__list-item--mobile, .custom-header__dropdownlink-list--mobile li) {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+html[data-dmli="dark"] body:has(#lithograph-app) .expandable-section {
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ---- Help Center (hue) ----
+ * Gaps in LinkedIn's OWN dark palette, not recoloring: the classic theme never
+ * colours collapsible triggers (only mercado does), lightens the step number but
+ * not its disc, the artdeco tables hardcode white, and an older sheet pins tab
+ * labels to #000 under the button LinkedIn does colour. The rules here use
+ * LinkedIn's hue dark tokens (the shared footer rules further down use the same
+ * palette as literals), and content.js sets the attribute only while it has the
+ * hue theme switched on. */
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .collapsible__trigger {
+  color: var(--hue-web-color-text);
+}
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .tabs__tab-label {
+  color: inherit;
+}
+/* The side-rail support and sign-in cards take their ink from the older
+ * --artdeco-reset-* tokens, which LinkedIn's hue dark theme never redefines.
+ * Scoped to <main>: the header's search suggestions and product picker are white
+ * (the avatar menu has its own dark rules at the end of this file). */
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark main {
+  --artdeco-reset-typography-get-color-black-90: var(--hue-web-color-text);
+  --artdeco-reset-form-black-90: var(--hue-web-color-text);
+  --artdeco-reset-link-color-blue7: var(--hue-web-color-link);
+  --artdeco-reset-link-color-blue8: var(--hue-web-color-link-hover);
+  --artdeco-reset-link-color-blue9: var(--hue-web-color-link-hover);
+  --artdeco-reset-link-color-purple7: var(--hue-web-color-link-visited);
+  --artdeco-reset-link-color-purple8: var(--hue-web-color-link-visited);
+  --artdeco-reset-link-color-purple9: var(--hue-web-color-link-visited);
+}
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark :is(.support-card__icon, .support-card__icon-large) {
+  color: var(--hue-web-color-link);
+}
+/* LinkedIn's link blue reaches only 4.4:1 on its own note-callout gold. */
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .article-content-callout__background--note a {
+  color: var(--hue-web-color-link-hover);
+}
+
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .article-content__ordered-list-item::before,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .article-content__rich-text ol li::before {
+  background-color: var(--hue-web-color-surface-accent-4);
+}
+
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .artdeco-table,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .artdeco-table--striped {
+  background: var(--hue-web-color-surface);
+}
+/* LinkedIn frames the scrolling wrapper, not the table; a ring on the table
+ * would be clipped by the wrapper's overflow. */
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .article-content__rich-text-table {
+  box-shadow: 0 0 0 1px var(--hue-web-color-divider);
+}
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .artdeco-table--striped .artdeco-table-row:nth-child(even) {
+  background: var(--hue-web-color-surface-tint);
+}
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .artdeco-table-header,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .artdeco-table-cell {
+  color: var(--hue-web-color-text);
+  border-bottom-color: var(--hue-web-color-divider);
+}
+
+/* ---- Help Center pages without hue (home, search, topic lists) ----
+ * These run LinkedIn's older artdeco template with no dark theme, while the
+ * articles they link to switch to LinkedIn's hue dark palette, so they are
+ * painted in that same palette (slate #283e4a, #344a57 cards, white ink,
+ * #98d8f4 links) and the Help Center reads as one site. The blue header and its
+ * search box stay as LinkedIn draws them on the articles; its search suggestions
+ * and product picker are white dropdowns, so every reset is limited to <main>
+ * and the footer (the avatar menu has its own dark rules at the end of this
+ * file). The footer is shared with the articles, where LinkedIn's own dark theme
+ * leaves it white. */
+html[data-dmli="dark"]:has(> body[data-in-hueify-scope="false"]) {
+  background-color: #283e4a !important;
+}
+/* The token layer lightens <body>'s ink, which the white search box, its
+ * suggestions and the header dropdowns would otherwise inherit. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] :is(.site-search, .global-header .dropdown__menu) {
+  color: rgba(0, 0, 0, 0.9);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] :is(main, .global-footer) {
+  --artdeco-reset-typography-get-color-black-90: #fff;
+  --artdeco-reset-form-black-90: #fff;
+  --artdeco-reset-link-color-blue7: #98d8f4;
+  --artdeco-reset-link-color-blue8: #caedff;
+  --artdeco-reset-link-color-blue9: #e6f7ff;
+  --artdeco-reset-link-color-purple7: #cacafc;
+  --artdeco-reset-link-color-purple8: #e6e6ff;
+  --artdeco-reset-link-color-purple9: #f5f5fe;
+  --artdeco-reset-forms-input-color: #fff;
+  --artdeco-reset-forms-input-placeholder-color: rgba(255, 255, 255, 0.7);
+  --artdeco-reset-forms-input-border: 0.1rem solid rgba(255, 255, 255, 0.6);
+  --artdeco-reset-forms-input-disabled-hover-border-color: rgba(255, 255, 255, 0.6);
+  --artdeco-reset-forms-input-focus-box-shadow: 0 0 0 0.1rem #98d8f4;
+  --artdeco-reset-forms-input-error: #ffbcba;
+  --artdeco-reset-forms-select-border: 0.1rem solid rgba(255, 255, 255, 0.9);
+  --artdeco-reset-forms-select-hover-border-color: #fff;
+  --artdeco-reset-forms-select-focus-border-color: #98d8f4;
+  --artdeco-reset-forms-select-focus-box-shadow: 0 0 0 0.1rem #98d8f4;
+}
+/* The homes carry the white search box inside <main>, suggestions and all. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(p, li, h1, h2, h3, h4, h5, label, legend, dt, dd, th, td):not(.site-search *),
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.t-black, .search-results-filter__collapsible-trigger-text, .paginator__page):not(.site-search *) {
+  color: #fff;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(h6, .t-black--light):not(.site-search *) {
+  color: rgba(255, 255, 255, 0.7);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.artdeco-button--secondary, .search-results-feature-launcher__button):not(:disabled) {
+  color: #98d8f4;
+  box-shadow: inset 0 0 0 1px #98d8f4;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main .artdeco-button--secondary:disabled {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main input[type="radio"]:not(:checked) + label::before {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .support-card__icon,
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .support-card__icon-large,
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.required-indicator, .required-indicator *, label.required::after) {
+  color: #98d8f4;
+}
+
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .page-heading {
+  background-color: #283e4a;
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+/* The AI summary, premium upsell and sticky chat card render only for some
+ * signed-in or feature-gated states, on white LinkedIn surfaces. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] :is(.recommended-topics__list-item > a, .search-results-feature-launcher),
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.ai-summarized-result__content, .ai-summarized-feedback-form, .premium-upsell-banner, .artdeco-card) {
+  background-color: #344a57;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.premium-upsell-banner, .artdeco-card) {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.ai-summarized-result__feedback-button, .ai-summarized-feedback-form__dismiss-button, .ai-summarized-feedback-form__feedback-option-label, .ai-summarized-feedback-form__feedback-textarea) {
+  background-color: #283e4a;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main .ai-summarized-feedback-form__feedback-option-input:checked + .ai-summarized-feedback-form__feedback-option-label {
+  background-color: #057642;
+  border-color: #057642;
+  color: #fff;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.ai-summarized-result__disclosure, .ai-summarized-result__sources-title, .ai-summarized-result__source-link, .ai-summarized-result__external-link-icon, .ai-summarized-feedback-form__feedback-textarea-character-count, .premium-upsell-banner__social-proof-text, .premium-upsell-banner__value-prop-subheader, .premium-upsell-banner__footer-text) {
+  color: rgba(255, 255, 255, 0.7);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.artdeco-card__title, .premium-upsell-banner__secondary-cta) {
+  color: #fff;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main .premium-upsell-banner__secondary-cta {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main .ai-summarized-feedback-form__submit-button {
+  color: #98d8f4;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main .ai-summarized-result__feedback-completed {
+  color: #b5d99f;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main .ai-summarized-result__separator {
+  color: rgba(255, 255, 255, 0.25);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] main :is(.artdeco-card__header, .artdeco-card__actions, .artdeco-card__action + .artdeco-card__action) {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] :is(.sign-in-card, .collapsible-page-aside) {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] :is(.collapsible-page-aside__body, .search-results-filter__collapsible) {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .search-results-page__delimiter::before {
+  border-left-color: rgba(255, 255, 255, 0.25);
+}
+
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-footer__upper-row-wrapper,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-footer__upper-row-wrapper {
+  background-color: #283e4a;
+  border-top-color: rgba(255, 255, 255, 0.25);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-footer__lower-row-wrapper,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-footer__lower-row-wrapper {
+  background: #1f313b;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-footer .global-footer__upper-row-item-link,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-footer .global-footer__upper-row-item-link {
+  color: rgba(255, 255, 255, 0.9);
+}
+/* The "Privacy and Terms" menu is LinkedIn's dark inverse dropdown with its own
+ * white ink; the reset leaves it alone. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-footer__lower-row-wrapper :is(a, span, button):not(.dropdown__menu *),
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-footer__lower-row-wrapper :is(a, span, button):not(.dropdown__menu *) {
+  color: rgba(255, 255, 255, 0.7);
+}
+/* The footer wordmark's paths carry a hardcoded fill="#000000" attribute
+ * (LinkedIn's own fill rules apply only under -ms-high-contrast), and any author
+ * rule outranks a presentation attribute. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-footer li-icon[type="linkedin-logo"] .linkedin-text :is(path, polygon),
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-footer li-icon[type="linkedin-logo"] .linkedin-text :is(path, polygon) {
+  fill: #fff;
+}
+/* A transparent <select> leaves Chrome's native popup to draw a white list under
+ * the select's white ink; opaque option colours give the popup its own. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-footer :is(.language-switcher__form-select, .language-switcher__form-select option),
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-footer :is(.language-switcher__form-select, .language-switcher__form-select option) {
+  color-scheme: dark;
+  background-color: #283e4a;
+  color: #fff;
+}
+
+/* The avatar menu, on both Help Center templates, as an elevated dark card.
+ * .global-header .me-menu outranks the dark-ink rule for header dropdowns. */
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu .me-menu__dropdown-menu,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu .me-menu__dropdown-menu {
+  background-color: #344a57;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 6px 9px rgba(0, 0, 0, 0.4);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu :is(.member-info__name, .me-menu__section-header, .me-menu__close),
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu :is(.member-info__name, .me-menu__section-header, .me-menu__close) {
+  color: #fff;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu .member-info__headline,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu .member-info__headline {
+  color: rgba(255, 255, 255, 0.7);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu .member-info__settings-link,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu .member-info__settings-link {
+  color: #98d8f4;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu .me-menu__action-link,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu .me-menu__action-link {
+  color: rgba(255, 255, 255, 0.85);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu .me-menu__action-link:is(:hover, :focus),
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu .me-menu__action-link:is(:hover, :focus) {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu .me-menu__action-link--selected,
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu .me-menu__action-link--selected {
+  color: #98d8f4;
+  box-shadow: 4px 0 0 #98d8f4 inset;
+}
+html[data-dmli="dark"] body[data-in-hueify-scope="false"] .global-header .me-menu :is(.me-menu__action-links, .me-menu__action-link-group, .me-menu__action-link),
+html[data-dmli-hue="dark"] .hue-web-color-scheme--dark .global-header .me-menu :is(.me-menu__action-links, .me-menu__action-link-group, .me-menu__action-link) {
+  border-color: rgba(255, 255, 255, 0.2);
+}
